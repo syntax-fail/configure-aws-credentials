@@ -150,6 +150,8 @@ export async function run() {
         // eslint-disable-next-line no-await-in-loop
         roleCredentials = await retryAndBackoff(
           async () => {
+            core.info("assuming.....");
+            core.info(webIdentityToken);
             return assumeRole({
               credentialsClient,
               sourceAccountId,
