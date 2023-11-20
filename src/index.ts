@@ -18,6 +18,8 @@ const REGION_REGEX = /^[a-z0-9-]+$/g;
 
 export async function run() {
   try {
+    core.info('yes build worked I swear')
+
     // Get inputs
     const AccessKeyId = core.getInput('aws-access-key-id', { required: false });
     const SecretAccessKey = core.getInput('aws-secret-access-key', { required: false });
