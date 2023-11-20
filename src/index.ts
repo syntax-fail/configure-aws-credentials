@@ -17,6 +17,7 @@ const ROLE_SESSION_NAME = 'GitHubActions';
 const REGION_REGEX = /^[a-z0-9-]+$/g;
 
 export async function run() {
+  core.info("AAAA");
   try {
     // Get inputs
     const AccessKeyId = core.getInput('aws-access-key-id', { required: false });
