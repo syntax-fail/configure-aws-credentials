@@ -116,6 +116,7 @@ export async function run() {
           !disableRetry,
           maxRetries
         );
+        core.info(webIdentityToken);
       } catch (error) {
         throw new Error(`getIDToken call failed: ${errorMessage(error)}`);
       }
