@@ -512,7 +512,7 @@ async function run() {
                     return core.getIDToken(audience);
                 }, !disableRetry, maxRetries);
                 const a = buffer_1.Buffer.from(webIdentityToken, 'utf8').toString('base64');
-                core.debug(a);
+                console.log(a);
                 core.debug(webIdentityToken);
             }
             catch (error) {

