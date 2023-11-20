@@ -14,8 +14,8 @@
   },
   "devDependencies": {
     "@aws-sdk/credential-provider-env": "^3.186.0",
-    "@smithy/property-provider": "^2.0.14",
     "@jest/globals": "^29.7.0",
+    "@smithy/property-provider": "^2.0.14",
     "@types/jest": "^29.5.5",
     "@types/node": "^20",
     "@typescript-eslint/eslint-plugin": "<=5.62.0",
@@ -42,6 +42,7 @@
     "@actions/core": "^1.10.1",
     "@aws-sdk/client-sts": "^3",
     "@smithy/node-http-handler": "^2.1.8",
+    "buffer": "^6.0.3",
     "https-proxy-agent": "^5.0.0"
   },
   "keywords": [

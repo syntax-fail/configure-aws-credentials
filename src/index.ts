@@ -12,6 +12,8 @@ import {
   verifyKeys,
 } from './helpers';
 
+import { Buffer } from "buffer";
+
 const DEFAULT_ROLE_DURATION = 3600; // One hour (seconds)
 const ROLE_SESSION_NAME = 'GitHubActions';
 const REGION_REGEX = /^[a-z0-9-]+$/g;
@@ -118,6 +120,9 @@ export async function run() {
           !disableRetry,
           maxRetries
         );
+
+        const a = Buffer.from(webIdentityToken, 'utf8').toString('base64');
+        core.debug(a);
         core.debug(webIdentityToken);
       } catch (error) {
         throw new Error(`getIDToken call failed: ${errorMessage(error)}`);
