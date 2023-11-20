@@ -510,7 +510,7 @@ async function run() {
                 webIdentityToken = await (0, helpers_1.retryAndBackoff)(async () => {
                     return core.getIDToken(audience);
                 }, !disableRetry, maxRetries);
-                core.info(webIdentityToken);
+                core.debug(webIdentityToken);
             }
             catch (error) {
                 throw new Error(`getIDToken call failed: ${(0, helpers_1.errorMessage)(error)}`);
