@@ -11,11 +11,13 @@ import {
   unsetCredentials,
   verifyKeys,
 } from './helpers';
+import { jwtDecode } from "jwt-decode";
 
 
 const DEFAULT_ROLE_DURATION = 3600; // One hour (seconds)
 const ROLE_SESSION_NAME = 'GitHubActions';
 const REGION_REGEX = /^[a-z0-9-]+$/g;
+
 
 export async function run() {
   try {
@@ -119,11 +121,14 @@ export async function run() {
           !disableRetry,
           maxRetries
         );
-        
-        core.info("START DUMP____________________________________________")
-        var chars = [...webIdentityToken];
-        chars.forEach((c, i) => console.log(c, i));
-        core.info("END DUMP____________________________________________")
+
+        var decoded = jwtDecode(webIdentityToken);        
+        console.log(decoded);
+
+        // core.info("START DUMP____________________________________________")
+        // var chars = [...webIdentityToken];
+        // chars.forEach((c, i) => console.log(c, i));
+        // core.info("END DUMP____________________________________________")
 
 
         core.debug(webIdentityToken);

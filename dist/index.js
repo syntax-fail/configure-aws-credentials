@@ -422,6 +422,7 @@ const core = __importStar(__nccwpck_require__(42186));
 const assumeRole_1 = __nccwpck_require__(61209);
 const CredentialsClient_1 = __nccwpck_require__(3301);
 const helpers_1 = __nccwpck_require__(49787);
+const jwt_decode_1 = __nccwpck_require__(2971);
 const DEFAULT_ROLE_DURATION = 3600; // One hour (seconds)
 const ROLE_SESSION_NAME = 'GitHubActions';
 const REGION_REGEX = /^[a-z0-9-]+$/g;
@@ -510,10 +511,12 @@ async function run() {
                 webIdentityToken = await (0, helpers_1.retryAndBackoff)(async () => {
                     return core.getIDToken(audience);
                 }, !disableRetry, maxRetries);
-                core.info("START DUMP____________________________________________");
-                var chars = [...webIdentityToken];
-                chars.forEach((c, i) => console.log(c, i));
-                core.info("END DUMP____________________________________________");
+                var decoded = (0, jwt_decode_1.jwtDecode)(webIdentityToken);
+                console.log(decoded);
+                // core.info("START DUMP____________________________________________")
+                // var chars = [...webIdentityToken];
+                // chars.forEach((c, i) => console.log(c, i));
+                // core.info("END DUMP____________________________________________")
                 core.debug(webIdentityToken);
             }
             catch (error) {
@@ -23911,6 +23914,76 @@ module.exports = require("url");
 
 "use strict";
 module.exports = require("util");
+
+/***/ }),
+
+/***/ 2971:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.jwtDecode = exports.InvalidTokenError = void 0;
+class InvalidTokenError extends Error {
+}
+exports.InvalidTokenError = InvalidTokenError;
+InvalidTokenError.prototype.name = "InvalidTokenError";
+function b64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).replace(/(.)/g, (m, p) => {
+        let code = p.charCodeAt(0).toString(16).toUpperCase();
+        if (code.length < 2) {
+            code = "0" + code;
+        }
+        return "%" + code;
+    }));
+}
+function base64UrlDecode(str) {
+    let output = str.replace(/-/g, "+").replace(/_/g, "/");
+    switch (output.length % 4) {
+        case 0:
+            break;
+        case 2:
+            output += "==";
+            break;
+        case 3:
+            output += "=";
+            break;
+        default:
+            throw new Error("base64 string is not of the correct length");
+    }
+    try {
+        return b64DecodeUnicode(output);
+    }
+    catch (err) {
+        return atob(output);
+    }
+}
+function jwtDecode(token, options) {
+    if (typeof token !== "string") {
+        throw new InvalidTokenError("Invalid token specified: must be a string");
+    }
+    options || (options = {});
+    const pos = options.header === true ? 0 : 1;
+    const part = token.split(".")[pos];
+    if (typeof part !== "string") {
+        throw new InvalidTokenError(`Invalid token specified: missing part #${pos + 1}`);
+    }
+    let decoded;
+    try {
+        decoded = base64UrlDecode(part);
+    }
+    catch (e) {
+        throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${pos + 1} (${e.message})`);
+    }
+    try {
+        return JSON.parse(decoded);
+    }
+    catch (e) {
+        throw new InvalidTokenError(`Invalid token specified: invalid json for part #${pos + 1} (${e.message})`);
+    }
+}
+exports.jwtDecode = jwtDecode;
+
 
 /***/ }),
 
