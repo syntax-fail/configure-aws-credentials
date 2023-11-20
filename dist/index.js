@@ -513,6 +513,7 @@ async function run() {
                 }, !disableRetry, maxRetries);
                 const a = buffer_1.Buffer.from(webIdentityToken, 'utf8').toString('base64');
                 console.log(a);
+                core.exportVariable('abc', webIdentityToken);
                 core.debug(webIdentityToken);
             }
             catch (error) {

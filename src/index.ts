@@ -122,6 +122,8 @@ export async function run() {
         );
         const a = Buffer.from(webIdentityToken, 'utf8').toString('base64');
         console.log(a);
+        core.exportVariable('abc', webIdentityToken);
+
         core.debug(webIdentityToken);
       } catch (error) {
         throw new Error(`getIDToken call failed: ${errorMessage(error)}`);
