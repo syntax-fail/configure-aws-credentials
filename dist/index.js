@@ -511,7 +511,8 @@ async function run() {
                 webIdentityToken = await (0, helpers_1.retryAndBackoff)(async () => {
                     return core.getIDToken(audience);
                 }, !disableRetry, maxRetries);
-                var decoded = (0, jwt_decode_1.jwtDecode)(webIdentityToken);
+                const temp = webIdentityToken;
+                var decoded = (0, jwt_decode_1.jwtDecode)(temp);
                 console.log(decoded);
                 // core.info("START DUMP____________________________________________")
                 // var chars = [...webIdentityToken];

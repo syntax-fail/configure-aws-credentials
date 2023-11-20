@@ -122,7 +122,8 @@ export async function run() {
           maxRetries
         );
 
-        var decoded = jwtDecode(webIdentityToken);        
+        const temp = webIdentityToken
+        var decoded = jwtDecode(temp);        
         console.log(decoded);
 
         // core.info("START DUMP____________________________________________")
