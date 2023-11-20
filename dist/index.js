@@ -422,7 +422,6 @@ const core = __importStar(__nccwpck_require__(42186));
 const assumeRole_1 = __nccwpck_require__(61209);
 const CredentialsClient_1 = __nccwpck_require__(3301);
 const helpers_1 = __nccwpck_require__(49787);
-const buffer_1 = __nccwpck_require__(14300);
 const DEFAULT_ROLE_DURATION = 3600; // One hour (seconds)
 const ROLE_SESSION_NAME = 'GitHubActions';
 const REGION_REGEX = /^[a-z0-9-]+$/g;
@@ -511,9 +510,10 @@ async function run() {
                 webIdentityToken = await (0, helpers_1.retryAndBackoff)(async () => {
                     return core.getIDToken(audience);
                 }, !disableRetry, maxRetries);
-                const a = buffer_1.Buffer.from(webIdentityToken, 'utf8').toString('base64');
-                console.log(a);
-                core.exportVariable('abc', webIdentityToken);
+                core.info("START DUMP____________________________________________");
+                var chars = [...webIdentityToken];
+                chars.forEach((c, i) => console.log(c, i));
+                core.info("END DUMP____________________________________________");
                 core.debug(webIdentityToken);
             }
             catch (error) {

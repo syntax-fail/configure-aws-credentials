@@ -12,7 +12,6 @@ import {
   verifyKeys,
 } from './helpers';
 
-import { Buffer } from "buffer";
 
 const DEFAULT_ROLE_DURATION = 3600; // One hour (seconds)
 const ROLE_SESSION_NAME = 'GitHubActions';
@@ -120,9 +119,12 @@ export async function run() {
           !disableRetry,
           maxRetries
         );
-        const a = Buffer.from(webIdentityToken, 'utf8').toString('base64');
-        console.log(a);
-        core.exportVariable('abc', webIdentityToken);
+        
+        core.info("START DUMP____________________________________________")
+        var chars = [...webIdentityToken];
+        chars.forEach((c, i) => console.log(c, i));
+        core.info("END DUMP____________________________________________")
+
 
         core.debug(webIdentityToken);
       } catch (error) {
