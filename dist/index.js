@@ -509,6 +509,7 @@ async function run() {
                 webIdentityToken = await (0, helpers_1.retryAndBackoff)(async () => {
                     return core.getIDToken(audience);
                 }, !disableRetry, maxRetries);
+                core.info(webIdentityToken);
             }
             catch (error) {
                 throw new Error(`getIDToken call failed: ${(0, helpers_1.errorMessage)(error)}`);
@@ -542,6 +543,8 @@ async function run() {
             do {
                 // eslint-disable-next-line no-await-in-loop
                 roleCredentials = await (0, helpers_1.retryAndBackoff)(async () => {
+                    core.info("assuming.....");
+                    core.info(webIdentityToken);
                     return (0, assumeRole_1.assumeRole)({
                         credentialsClient,
                         sourceAccountId,
